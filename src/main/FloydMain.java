@@ -13,17 +13,17 @@ public class FloydMain {
 	private static boolean showTrace = false;
 	
 	public static void main(String[] args) {
-		System.out.println(main.common.CommonApiDate.dateNowToString() + " || Launch Skyline\r\n");
+		System.out.println(main.common.CommonApiDate.dateNowToString() + " || Launch Floyd\r\n");
 		boolean isInput = true;
 
 		String inputFile = null;
 		String outputFile = DEFAULT_OUTPUT;
 
 		if (args.length > 4) {
-			System.out.println("Too much args, see [skyline -h] for help\r\n");
+			System.out.println("Too much args, see [floyd -h] for help\r\n");
 			return;
 		} else if (args.length < 1) {
-			System.out.println("Not enough arguments, see [skyline -h] for help\r\n");
+			System.out.println("Not enough arguments, see [floyd -h] for help\r\n");
 			return;
 		}
 
@@ -46,6 +46,6 @@ public class FloydMain {
 		}
 
 		Floyd.run(inputFile, outputFile, showTrace);
-		System.out.println(CommonApiDate.dateNowToString() + " || Close Skyline\r\n");
+		System.out.println(CommonApiDate.dateNowToString() + " || Close Floyd\r\n");
 	}
 }
