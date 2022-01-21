@@ -5,11 +5,12 @@ public class CommonApiMenu {
 	public static String showHelp() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("SINTAXIS: skyline [-t][-h] [fichero entrada] [fichero salida]\r\n");
-		sb.append("-t Traza cada llamada recursiva y sus parámetros\r\n");
+		sb.append("SINTAXIS: floyd [-t][-h] [fichero entrada] [fichero salida]\r\n");
+		sb.append("-t Traza el algoritmo\r\n");
 		sb.append("-h Muestra esta ayuda\r\n");
-		sb.append("[fichero entrada] Conjunto de edificios de la ciudad\r\n");
-		sb.append("[fichero salida] Secuencia que representan el skyline de la ciudad\r\n");
+		sb.append("[fichero entrada] Matriz de adyacencia que representa el grafo\r\n");
+		sb.append(
+				"[fichero salida] Para cada par de nodos: la lista de nodos del camino más corto y su valor o longitud\r\n");
 
 		return sb.toString();
 	}
@@ -21,5 +22,9 @@ public class CommonApiMenu {
 		sb.append("fichero salida: " + outputFile + "\r\n");
 
 		return sb.toString();
+	}
+
+	public int[][] showInputMenu() {
+		return new int[0][0];
 	}
 }

@@ -1,85 +1,101 @@
 package main;
 
-import java.util.ArrayList;
-
 import main.common.CommonApiFile;
 
 public class Floyd {
 
-	public static void run(String inputFile, String outputFile, boolean showTrace) {
-		Building[] buildings = CommonApiFile.readFile(inputFile);
-		ArrayList<Skyline> skylines = obtenerSkyLines(buildings, 0, (buildings.length - 1), showTrace);
+	public static final Integer INF = 9999;
+	public int[][] M = new int[0][0];
+	public int[][] rutas = new int[0][0];
 
-		boolean isFirst = true;
-		StringBuilder sb = new StringBuilder();
-		sb.append("{");
-		for (Skyline s : skylines) {
-			if (isFirst) {
-				isFirst = false;
-			} else {
-				sb.append(",");
-			}
+//	public static void run(String inputFile, String outputFile, boolean showTrace) {
+//		Building[] buildings = CommonApiFile.readFile(inputFile);
+//		ArrayList<Skyline> skylines = obtenerSkyLines(buildings, 0, (buildings.length - 1), showTrace);
+//
+//		boolean isFirst = true;
+//		StringBuilder sb = new StringBuilder();
+//		sb.append("{");
+//		for (Skyline s : skylines) {
+//			if (isFirst) {
+//				isFirst = false;
+//			} else {
+//				sb.append(",");
+//			}
+//
+//			sb.append("(");
+//			sb.append(s.abscisa + "," + s.height);
+//			sb.append(")");
+//
+//		}
+//		sb.append("}");
+//
+//		CommonApiFile.createAndWriteFile(outputFile, sb.toString());
+//	}
 
-			sb.append("(");
-			sb.append(s.abscisa + "," + s.height);
-			sb.append(")");
+	public void run(String inputFile, String outputFile, boolean showTrace) {
+		int[][] A = CommonApiFile.readFile(inputFile);
 
+		int N = 0;
+		for (int[] ints : A) {
+			N = ints.length;
 		}
-		sb.append("}");
 
-		CommonApiFile.createAndWriteFile(outputFile, sb.toString());
+		this.M = new int[N][N];
+		this.rutas = new int[N][N];
+
+		int i, j, k, tmp;
+		for (i = 0; i < N; i++) {
+			for (j = 0; j < N; j++) {
+				this.M[i][j] = A[i][j];
+				this.rutas[i][j] = 0;
+			}
+		}
+		for (k = 0; k < N; k++) {
+			for (i = 0; i < N; i++) {
+				for (j = 0; j < N; j++) {
+					tmp = this.M[i][k] + this.M[k][j];
+					if (tmp < this.M[i][j]) {
+						this.M[i][j] = tmp;
+						this.rutas[i][j] = k;
+					}
+				}
+			}
+		}
+
+		String result = VerRutas(A, N);
+		CommonApiFile.createAndWriteFile(outputFile, result);
 	}
 
-	static void Floyd2(int[][] A, int N)
-    {
-		int[][] M = new int [N][N];
-		int[][] rutas = new int [N][N];
+	private String VerRutas(int[][] A, int N) {
+		StringBuilder sb = new StringBuilder();
 
-        int i,j,k,tmp;
-        for (i = 0; i < N; i++) {
-            for (j = 0; j < N; j++) {
-                M[i][j] = A[i][j];
-                rutas[i][j] = 0;
-            }
-        }
-        for (k = 0; k < N; k++) {
-            for (i = 0; i < N; i++) {
-                for (j = 0; j < N; j++) {
-                    tmp = M[i][k] + M[k][j];
-                    if(tmp < M[i][j]){
-                        M[i][j] = tmp;
-                        rutas[i][j] = k;
-                    }
-                }
-            }
-        }
-    }
-	
-	static void VerRutas(int[][] A, int N)
-    {
-        int i,j;
-        for (i = 0; i < N; i++) {
-            for (j = 0; j < N; j++) {
-                if(M[i][j] != IHelper.INF){
-                    System.out.print("["+(i+1)+", "+(j+1)+"]: ");
-                    System.out.print((i+1)+",");
-                    ImprimeRutaRec(i,j);
-                    System.out.print((j+1)+": ");
-                    System.out.print(M[i][j]);
-                    
-                    System.out.println();
-                }
-            }
-        }
-    }
+		int i, j;
+		for (i = 0; i < N; i++) {
+			for (j = 0; j < N; j++) {
+				if (rutas[i][j] != INF) {
+					sb.append("[" + (i + 1) + ", " + (j + 1) + "]: ");
+					sb.append((i + 1) + ",");
+					sb.append(ImprimeRutaRec(i, j));
+					sb.append((j + 1) + ": ");
+					sb.append(this.M[i][j]);
+					sb.append("\r\n");
+				}
+			}
+		}
 
-    static void ImprimeRutaRec(int i, int j){
-        int k;
-        k = rutas[i][j];
-        if(k != 0){
-            ImprimeRutaRec(i,k);
-            System.out.print((k+1)+",");
-            ImprimeRutaRec(k,j);
-        }
-    }
+		return sb.toString();
+	}
+
+	private String ImprimeRutaRec(int i, int j) {
+		StringBuilder sb = new StringBuilder();
+
+		int k = this.rutas[i][j];
+		if (k != 0) {
+			sb.append(ImprimeRutaRec(i, k));
+			sb.append((k + 1) + ",");
+			sb.append(ImprimeRutaRec(k, j));
+		}
+
+		return sb.toString();
+	}
 }
