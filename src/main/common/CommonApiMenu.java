@@ -64,7 +64,6 @@ public class CommonApiMenu {
 			System.out.println("!!No es un número válido¡¡");
 		}
 
-		// closing scanner
 		in.close();
 		return A;
 	}
