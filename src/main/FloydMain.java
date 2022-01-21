@@ -45,7 +45,7 @@ public class FloydMain {
 			}
 		}
 
-		Floyd.run(inputFile, outputFile, showTrace);
+//		Floyd.run(inputFile, outputFile, showTrace);
 		System.out.println(CommonApiDate.dateNowToString() + " || Close Floyd\r\n");
 	}
 }
