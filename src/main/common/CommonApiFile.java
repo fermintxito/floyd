@@ -12,8 +12,6 @@ import main.Floyd;
 
 public class CommonApiFile {
 
-	private static final String INF = "-";
-
 	public static int[][] readFile(String filename) {
 		int[][] A = null;
 
@@ -35,8 +33,8 @@ public class CommonApiFile {
 				int value = 0;
 				for (String s : split) {
 					switch (s) {
-					case INF:
-						value = Floyd.INF;
+					case Floyd.STR_INF:
+						value = Floyd.INT_INF;
 						break;
 					default:
 						value = Integer.valueOf(s);
@@ -59,10 +57,8 @@ public class CommonApiFile {
 	}
 
 	public static void createAndWriteFile(String filename, String text) {
-		if (!isNull(filename)) {
-			createFile(filename);
-			writeToFile(filename, text);
-		}
+		createFile(filename);
+		writeToFile(filename, text);
 	}
 
 	public static void createFile(String filename) {

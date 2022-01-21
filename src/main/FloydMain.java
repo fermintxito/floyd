@@ -20,9 +20,6 @@ public class FloydMain {
 		if (args.length > 4) {
 			System.out.println("Too much args, see [floyd -h] for help\r\n");
 			return;
-		} else if (args.length < 1) {
-			System.out.println("Not enough arguments, see [floyd -h] for help\r\n");
-			return;
 		}
 
 		for (String a : args) {

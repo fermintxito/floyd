@@ -1,10 +1,15 @@
 package main;
 
+import static java.util.Objects.isNull;
+
 import main.common.CommonApiFile;
+import main.common.CommonApiMenu;
 
 public class Floyd {
 
-	public static final Integer INF = 9999;
+	public static final int INT_INF = 9999;
+	public static final String STR_INF = "-";
+
 	public int[][] M = new int[0][0];
 	public int[][] rutas = new int[0][0];
 
@@ -33,7 +38,12 @@ public class Floyd {
 //	}
 
 	public void run(String inputFile, String outputFile, boolean showTrace) {
-		int[][] A = CommonApiFile.readFile(inputFile);
+		int[][] A = null;
+		if (!isNull(inputFile)) {
+			A = CommonApiFile.readFile(inputFile);
+		} else {
+			A = CommonApiMenu.showInputMenu();
+		}
 
 		int N = 0;
 		for (int[] ints : A) {
@@ -63,7 +73,12 @@ public class Floyd {
 		}
 
 		String result = VerRutas(A, N);
-		CommonApiFile.createAndWriteFile(outputFile, result);
+
+		if (!isNull(outputFile)) {
+			CommonApiFile.createAndWriteFile(outputFile, result);
+		} else {
+			System.out.println(result);
+		}
 	}
 
 	private String VerRutas(int[][] A, int N) {
@@ -72,7 +87,7 @@ public class Floyd {
 		int i, j;
 		for (i = 0; i < N; i++) {
 			for (j = 0; j < N; j++) {
-				if (rutas[i][j] != INF) {
+				if (this.rutas[i][j] != INT_INF) {
 					sb.append("[" + (i + 1) + ", " + (j + 1) + "]: ");
 					sb.append((i + 1) + ",");
 					sb.append(ImprimeRutaRec(i, j));
